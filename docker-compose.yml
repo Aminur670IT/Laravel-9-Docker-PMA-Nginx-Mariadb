@@ -3,7 +3,7 @@ services:
   nginx:
     image: nginx:alpine
     container_name: app-nginx
-    restart: unless-stopped
+    restart: always
     ports:
       - 80:80
     volumes:
@@ -23,7 +23,7 @@ services:
       dockerfile: Dockerfile
     image: app
     container_name: app
-    restart: unless-stopped
+    restart: always
     ports: 
         - 6001:6001
     working_dir: /var/www/html
@@ -38,9 +38,9 @@ services:
   database:
     image: mariadb:10.5.8
     container_name: app-mariadb
-    restart: unless-stopped
+    restart: always
     ports:
-      - 3304:3304
+      - 3306:3306
     volumes:
       - app-volume:/var/lib/mysql
     environment:
@@ -51,9 +51,9 @@ services:
     networks:
       - app-network
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
     container_name: app-phpmyadmin
-    restart: unless-stopped
+    restart: always
     tty: true
     depends_on:
       - database
